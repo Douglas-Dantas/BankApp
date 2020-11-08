@@ -8,6 +8,7 @@ import 'Cadastro.dart';
 import '../Util/popup_cadastro.dart';
 import '../Util/popup_content.dart';
 import '../Util/Botão/botaoPadrao.dart';
+import '../Telas/TelaInicial.dart';
 
 class TelaLogin extends StatefulWidget {
   @override
@@ -86,7 +87,6 @@ class _TelaLoginState extends State<TelaLogin> {
           borderRadius: BorderRadius.all(Radius.circular(25))),
       child: TextFormField(
         cursorColor: Colors.black,
-        
         obscureText: esconderSenha,
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
@@ -133,6 +133,8 @@ class _TelaLoginState extends State<TelaLogin> {
   //EVENTOS DA TELA
 
   _tocouEntrar() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => TelaInicial()));
     print('Entrar');
   }
 
@@ -140,8 +142,8 @@ class _TelaLoginState extends State<TelaLogin> {
     Navigator.push(
       context,
       PopupLayout(
-        bottom: 30,
-        top: 30,
+        bottom: 20,
+        top: 20,
         right: 30,
         left: 30,
         child: PopupContent(
