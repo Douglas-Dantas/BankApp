@@ -60,7 +60,7 @@ class PopupLayout extends ModalRoute {
         //type: MaterialType.canvas,
         // make sure that the overlay content is not cut off
         child: SafeArea(
-          bottom: true,
+          //bottom: true,
           child: _buildOverlayContent(context),
         ),
       ),
@@ -71,7 +71,7 @@ class PopupLayout extends ModalRoute {
     return Container(
       margin: EdgeInsets.only(
           bottom: this.bottom,
-          top: this.top,
+          //top: this.top,
           right: this.right,
           left: this.left),
       child: Stack(

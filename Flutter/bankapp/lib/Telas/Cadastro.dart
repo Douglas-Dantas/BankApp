@@ -151,12 +151,12 @@ class _CadastroState extends State<Cadastro> {
     FocusScope.of(context).unfocus();
     final DateTime picked = await showDatePicker(
         context: context,
-        selectableDayPredicate: (datetime) {
-          if (datetime.day == 10) {
-            return false;
-          }
-          return true;
-        },
+        // selectableDayPredicate: (datetime) {
+        //   if (datetime.day == 10) {
+        //     return false;
+        //   }
+        //   return true;
+        // },
         initialDatePickerMode: DatePickerMode.day,
         initialDate: DateTime.now(),
         firstDate: DateTime(1920, 12),

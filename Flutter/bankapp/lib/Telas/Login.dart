@@ -96,7 +96,7 @@ class _TelaLoginState extends State<TelaLogin> {
               esconderSenha = !esconderSenha;
             }),
             borderRadius: BorderRadius.circular(25),
-            child: Icon(Icons.remove_red_eye,
+            child: Icon(!esconderSenha ? Icons.visibility : Icons.visibility_off,
                 color: esconderSenha ? Color(0xff3a3a3a) : Colors.green),
           ),
           enabledBorder: OutlineInputBorder(borderSide: BorderSide.none),

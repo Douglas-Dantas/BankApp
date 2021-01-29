@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:skeleton_text/skeleton_text.dart';
 
 class TelaInicial extends StatefulWidget {
   TelaInicial({Key key}) : super(key: key);
@@ -8,10 +9,35 @@ class TelaInicial extends StatefulWidget {
 }
 
 class _TelaInicialState extends State<TelaInicial> {
+  bool esconderSaldo = true;
+  int _selectedIndex = 0;
+  double saldo;
+
+  static const TextStyle optionStyle =
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static const List<Widget> _widgetOptions = <Widget>[
+    Center(
+      child: Text(
+        'Index 0: Home',
+        style: optionStyle,
+      ),
+    ),
+    Text(
+      'Index 1: Business',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 2: School',
+      style: optionStyle,
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: SafeArea(
+    saldo = 15000.59;
+    return Scaffold(
+      bottomNavigationBar: bottomNavigationBar(),
+      body: SafeArea(
         child: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
@@ -21,7 +47,7 @@ class _TelaInicialState extends State<TelaInicial> {
               Row(
                 children: [
                   Expanded(
-                    child: saldo(),
+                    child: saldoView(),
                     flex: 3,
                   ),
                   Expanded(
@@ -30,6 +56,7 @@ class _TelaInicialState extends State<TelaInicial> {
                   )
                 ],
               ),
+              _widgetOptions.elementAt(_selectedIndex)
             ],
           ),
         ),
@@ -37,53 +64,101 @@ class _TelaInicialState extends State<TelaInicial> {
     );
   }
 
-  Widget saldo() {
+  Widget saldoView() {
     return Container(
-      height: 50,
-      margin: EdgeInsets.only(left: 20),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(border: Border.all(color: Color(0xffe0e0eb))),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            "Saldo: ",
-            textAlign: TextAlign.left,
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
-          ),
-          Text(
-            "R\$ 1850,50",
-            textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 20),
-          )
-        ],
-      ),
-    );
+        height: 50,
+        margin: EdgeInsets.only(left: 20),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          border: Border.all(color: Color(0xff5B2434), width: 2.3),
+          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12.0)),
+          color: Color(0x665B2434),
+        ),
+        child: Stack(
+          children: [
+            Positioned(
+              left: 10,
+              top: 8,
+              child: Text(
+                "SALDO:",
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                    color: Color(0xff5B2434), fontWeight: FontWeight.w900),
+              ),
+            ),
+            !esconderSaldo
+                ? Align(
+                    child: SkeletonAnimation(
+                      child: Container(
+                        color: Color(0x115B2434),
+                        height: 30,
+                        width: 120,
+                      ),
+                    ),
+                  )
+                : Align(
+                    child: Text(
+                      "R\$$saldo",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.black54,
+                        fontWeight: FontWeight.w900,
+                        fontSize: 20,
+                      ),
+                    ),
+                  )
+          ],
+        ));
   }
 
   Widget btVerSaldo() {
     return Container(
       decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(color: Color(0xffe0e0eb)),
-          top: BorderSide(color: Color(0xffe0e0eb)),
-          right: BorderSide(color: Color(0xffe0e0eb)),
-        ),
+        border: Border.all(color: Color(0xff5B2434), width: 2.3),
+        borderRadius: BorderRadius.only(topRight: Radius.circular(12.0)),
+        color: Color(0xff5B2434),
       ),
       height: 50,
       width: 200,
       alignment: Alignment.center,
       margin: EdgeInsets.only(right: 20),
       child: InkWell(
-        //onPressed: () => print("tocou"),
-        onTap: () => print("tocou"),
+        onTap: () => this.setState(() {
+          esconderSaldo = !esconderSaldo;
+        }),
         child: Container(
-          //color: Colors.blue,
           width: 200,
           height: 50,
-          child: Icon(Icons.remove_red_eye),
+          child: Icon(
+            !esconderSaldo ? Icons.visibility : Icons.visibility_off,
+            color: Colors.white,
+          ),
         ),
+        borderRadius: BorderRadius.only(topRight: Radius.circular(12.0)),
       ),
     );
+  }
+
+  Widget bottomNavigationBar() {
+    return BottomNavigationBar(
+      items: [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          title: Text("Home"),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.business),
+          title: Text("Business"),
+        )
+      ],
+      currentIndex: _selectedIndex,
+      onTap: _onItemTapped,
+    );
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 }
